@@ -4,7 +4,7 @@ Welcome to the IDhall / Improve sharing portal for **Multi-Target Debugging**. T
 
 ## Why This Matters (Continuous Improvement)
 
-In complex multi-board setups (such as our SYCLOPE systems featuring interacting **IHM**, **UC Principal / Acquisition**, and **UC Power** boards), debugging communication protocols (SPI, I2C, CAN, UART) between microcontrollers has historically been a major bottleneck. 
+In complex multi-board setups (such as systems featuring interacting **HMI/IHM**, **Main/Principal**, and **Power** boards), debugging communication protocols (SPI, I2C, CAN, UART) between microcontrollers has historically been a major bottleneck. 
 
 Traditionally, developers would:
 1. Debug one board at a time, guessing the state of the other.
