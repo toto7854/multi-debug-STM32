@@ -1,38 +1,23 @@
-# Next Practice: Multi-Target Debugging with Multiple ST-LINK/V2 in STM32CubeIDE
+# Multi-Target Debugging with Multiple ST-LINK/V2 in STM32CubeIDE
 
-Welcome to the IDhall / Improve sharing portal for **Multi-Target Debugging**. This documentation is designed to establish a new "next practice" for our development team, enabling engineers to debug multiple STM32 microcontrollers simultaneously using multiple ST-LINK/V2 probes on a single PC.
+This repository contains a guide to configuring and running simultaneous debug sessions for multiple STM32 microcontrollers on a single PC.
 
-## Why This Matters (Continuous Improvement)
-
-In complex multi-board setups (such as systems featuring interacting **HMI/IHM**, **Main/Principal**, and **Power** boards), debugging communication protocols (SPI, I2C, CAN, UART) between microcontrollers has historically been a major bottleneck. 
-
-Traditionally, developers would:
-1. Debug one board at a time, guessing the state of the other.
-2. Use print statements over UART, which changes timing and can hide race conditions.
-3. Switch USB cables back and forth.
-
-**The Next Practice:** By configuring STM32CubeIDE to target specific ST-LINK/V2 probes by their unique hardware Serial Numbers (SN) and assigning dedicated GDB ports, we can run multiple active debug sessions side-by-side in a single IDE window. We can inspect variables, set breakpoints, and trace execution flow across boards in real-time.
+## What is this for?
+When working on multi-board systems (e.g., interacting HMI, Main, and Power boards), debugging inter-device communication (SPI, I2C, CAN, UART) is complex. This setup allows you to:
+- **Debug multiple microcontrollers simultaneously** within a single STM32CubeIDE window.
+- **Step through code and hit breakpoints** across different targets in real time.
+- **Analyze states and race conditions** without swapping USB cables or guessing the remote device's state.
 
 ---
 
-## Documentation Structure
+## Documentation Guides
 
-Click on the links below to access the full guides:
-
-| Document | Description | Key Focus Areas |
-| :--- | :--- | :--- |
-| 📘 **[Step-by-Step Tutorial](TUTORIAL_MULTI_DEBUG.md)** | Core configuration guide to set up multiple boards. | Serial Number detection, Debug configuration, GDB port offset. |
-| ❓ **[FAQ & Troubleshooting](FAQ_TROUBLESHOOTING.md)** | Common errors, hardware recommendations, and QA. | Port conflicts, USB Hub bandwidth, GDB server lockups, team sharing. |
+* 📘 **[Step-by-Step Tutorial](TUTORIAL_MULTI_DEBUG.md)**: Find ST-LINK serial numbers, configure GDB ports, and create a "Launch Group" for one-click startup.
+* ❓ **[FAQ & Troubleshooting](FAQ_TROUBLESHOOTING.md)**: Solutions for port conflicts (`bind` errors), USB power limits, and sharing configuration files via Git.
 
 ---
 
-## Quick Benefits Matrix
-
-* **Time Saved:** Up to 70% reduction in time-to-debug multi-MCU communication bugs.
-* **Accuracy:** Real-time synchronization of breakpoints across multiple targets.
-* **Cost:** Zero. Uses our existing ST-LINK/V2 probes and STM32CubeIDE.
-* **Ease of Use:** Once configured, starting a multi-debug session is a single click.
-
----
-
-*Submitted to IDhall / Improve for team sharing & process optimization.*
+## Key Benefits
+* **Efficiency:** Drastically reduces time spent debugging multi-MCU communication.
+* **Precision:** Synchronized stepping and breakpoint execution across different targets.
+* **Zero Cost:** Uses existing ST-LINK/V2 probes and standard STM32CubeIDE features.
