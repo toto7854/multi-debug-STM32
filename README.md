@@ -1,23 +1,23 @@
-# Multi-Target Debugging with Multiple ST-LINK/V2 in STM32CubeIDE
+# Débogage Multi-Cible avec Plusieurs Sondes ST-LINK/V2 dans STM32CubeIDE
 
-This repository contains a guide to configuring and running simultaneous debug sessions for multiple STM32 microcontrollers on a single PC.
+Ce dépôt contient un guide pour configurer et exécuter des sessions de débogage simultanées pour plusieurs microcontrôleurs STM32 sur un seul PC.
 
-## What is this for?
-When working on multi-board systems (e.g., interacting HMI, Main, and Power boards), debugging inter-device communication (SPI, I2C, CAN, UART) is complex. This setup allows you to:
-- **Debug multiple microcontrollers simultaneously** within a single STM32CubeIDE window.
-- **Step through code and hit breakpoints** across different targets in real time.
-- **Analyze states and race conditions** without swapping USB cables or guessing the remote device's state.
-
----
-
-## Documentation Guides
-
-* 📘 **[Step-by-Step Tutorial](TUTORIAL_MULTI_DEBUG.md)**: Find ST-LINK serial numbers, configure GDB ports, and create a "Launch Group" for one-click startup.
-* ❓ **[FAQ & Troubleshooting](FAQ_TROUBLESHOOTING.md)**: Solutions for port conflicts (`bind` errors), USB power limits, and sharing configuration files via Git.
+## À quoi ça sert ?
+Lorsque l'on travaille sur des systèmes multi-cartes (par exemple, des cartes IHM, Principale et de Puissance qui interagissent), le débogage de la communication inter-cartes (SPI, I2C, CAN, UART) est complexe. Cette configuration vous permet de :
+- **Déboguer plusieurs microcontrôleurs simultanément** dans une seule et même fenêtre STM32CubeIDE.
+- **Exécuter le code pas à pas et atteindre des points d'arrêt (breakpoints)** sur différentes cibles en temps réel.
+- **Analyser les états et les conditions de concurrence (race conditions)** sans échanger les câbles USB ni deviner l'état de l'autre carte.
 
 ---
 
-## Key Benefits
-* **Efficiency:** Drastically reduces time spent debugging multi-MCU communication.
-* **Precision:** Synchronized stepping and breakpoint execution across different targets.
-* **Zero Cost:** Uses existing ST-LINK/V2 probes and standard STM32CubeIDE features.
+## Guides de Documentation
+
+* 📘 **[Tutoriel Étape par Étape](TUTORIAL_MULTI_DEBUG.md)** : Trouver les numéros de série des sondes ST-LINK, configurer les ports GDB et créer un "Groupe de Lancement" (Launch Group) pour un démarrage en un clic.
+* ❓ **[FAQ & Dépannage](FAQ_TROUBLESHOOTING.md)** : Solutions pour les conflits de ports (erreurs `bind`), les limites d'alimentation USB et le partage des fichiers de configuration via Git.
+
+---
+
+## Principaux Avantages
+* **Efficacité :** Réduit considérablement le temps passé à déboguer les communications multi-MCU.
+* **Précision :** Synchronisation de l'exécution pas à pas et des points d'arrêt sur différentes cibles.
+* **Coût Zéro :** Utilise nos sondes ST-LINK/V2 existantes et les fonctionnalités standards de STM32CubeIDE.

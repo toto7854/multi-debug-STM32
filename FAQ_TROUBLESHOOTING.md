@@ -1,62 +1,62 @@
-# FAQ & Troubleshooting: Multi-Target Debugging
+# FAQ & Dépannage : Débogage Multi-Cible
 
-This Q&A guide addresses common issues, edge cases, and best practices for debugging multiple microcontrollers simultaneously on a single computer.
-
----
-
-## 1. GDB Server and Connection Errors
-
-### Q: I get an error: "Could not start GDB server" or "Address already in use: bind". How do I fix it?
-* **Cause:** Two debug configurations are trying to use the same GDB Server port (typically the default `61234`) or SWO port (`61235`).
-* **Solution:** 
-  1. Open **Debug Configurations...** for your second/third project.
-  2. Navigate to the **Debugger** tab.
-  3. Change the **GDB Server Port** to a unique value (e.g., `61236`).
-  4. Change the **SWO Port** to a unique value (e.g., `61237`).
-  5. Apply the changes and restart the launch group.
-
-### Q: STM32CubeIDE displays "Failed to connect to ST-LINK" or "ST-Link USB communication error".
-* **Cause A:** The selected ST-LINK serial number is not plugged in, or the USB port went to sleep.
-  * **Fix:** Click **Scan** in the Debugger settings to verify if the serial number is detected. Try unplugging and re-plugging the probe.
-* **Cause B:** Power starvation. Multiple boards and debuggers can draw more current than a single USB port can supply (typically 500mA for USB 2.0).
-  * **Fix:** Always use a **powered USB hub** (with its own external wall-power adapter) when debugging more than two boards. Avoid running multiple boards off laptop battery power.
+Ce guide de questions-réponses aborde les problèmes courants, les cas particuliers et les meilleures pratiques pour déboguer plusieurs microcontrôleurs simultanément sur un seul ordinateur.
 
 ---
 
-## 2. Git and Team Collaboration Best Practices
+## 1. Serveur GDB et Erreurs de Connexion
 
-### Q: How do we share project configurations in Git without breaking things for other developers who have different physical ST-LINK probes?
-* **Problem:** Debug configurations in Eclipse/STM32CubeIDE are stored in `.launch` files. If you save them in the project and commit them, they will contain your specific ST-LINK Serial Number (S/N). When a teammate pulls the code, their debug sessions will fail because they don't have your specific probe.
-* **Best Practice Solution:**
-  1. **Do not commit local `.launch` files:** By default, Eclipse stores launch configurations in the local workspace directory (which is not committed to Git). Keep it this way if possible.
-  2. **Template Configurations:** If you want to share debug configurations, save them in the project directory but **leave the ST-LINK S/N field blank** in the committed version.
-     * When a developer launches it the first time, STM32CubeIDE will prompt: *"Multiple ST-LINKs found, please select one."*
-     * Once they select their local probe, they can save it locally.
-  3. Add local/modified `.launch` files to your `.gitignore`:
+### Q : J'ai une erreur : "Could not start GDB server" ou "Address already in use: bind". Comment la résoudre ?
+* **Cause :** Deux configurations de débogage tentent d'utiliser le même port de serveur GDB (généralement `61234` par défaut) ou le même port SWO (`61235`).
+* **Solution :**
+  1. Ouvrez **Debug Configurations...** pour votre deuxième/troisième projet.
+  2. Accédez à l'onglet **Debugger**.
+  3. Changez le **GDB Server Port** pour une valeur unique (ex. : `61236`).
+  4. Changez le **SWO Port** pour une valeur unique (ex. : `61237`).
+  5. Appliquez les modifications et relancez le groupe de lancement (Launch Group).
+
+### Q : STM32CubeIDE affiche "Failed to connect to ST-LINK" ou "ST-Link USB communication error".
+* **Cause A :** La sonde ST-LINK sélectionnée par son numéro de série n'est pas branchée, ou le port USB s'est mis en veille.
+  * **Solution :** Cliquez sur **Scan** dans les paramètres du débogueur pour vérifier si le numéro de série est détecté. Essayez de débrancher et rebrancher la sonde.
+* **Cause B :** Alimentation insuffisante. Plusieurs cartes et sondes peuvent consommer plus de courant qu'un port USB classique ne peut en fournir (généralement 500mA pour de l'USB 2.0).
+  * **Solution :** Utilisez systématiquement un **Hub USB 3.0 alimenté** (avec son propre adaptateur secteur) lorsque vous déboguez plus de deux cartes. Évitez d'alimenter plusieurs cartes sur la batterie d'un ordinateur portable.
+
+---
+
+## 2. Bonnes Pratiques Git et Collaboration d'Équipe
+
+### Q : Comment partager les configurations de projet dans Git sans casser le débogage pour les autres développeurs qui possèdent des sondes ST-LINK physiques différentes ?
+* **Problème :** Les configurations de débogage dans Eclipse/STM32CubeIDE sont stockées dans des fichiers `.launch`. Si vous les enregistrez dans le projet et les validez sur Git, ils contiendront le numéro de série unique (S/N) de votre sonde ST-LINK. Quand un collègue récupérera le code, sa session de débogage échouera car il ne possède pas votre sonde spécifique.
+* **Solutions recommandées :**
+  1. **Ne pas versionner les fichiers `.launch` locaux :** Par défaut, Eclipse stocke les configurations de lancement dans le dossier local du workspace (qui n'est pas poussé sur Git). Conservez ce comportement par défaut si possible.
+  2. **Configurations modèles :** Si vous souhaitez absolument partager les configurations de débogage, enregistrez-les dans le dossier du projet mais **laissez le champ ST-LINK S/N vide** dans la version validée sur Git.
+     * Lors du premier lancement par un développeur, STM32CubeIDE affichera un message : *"Multiple ST-LINKs found, please select one."* (Plusieurs ST-LINK détectés, veuillez en sélectionner un).
+     * Une fois qu'il aura sélectionné sa sonde locale, celle-ci sera enregistrée localement.
+  3. Ajoutez les fichiers `.launch` locaux à votre fichier `.gitignore` :
      ```gitignore
-     # Ignore developer-specific launch configurations
+     # Ignorer les configurations de débogage locales spécifiques aux développeurs
      *.launch
      ```
 
 ---
 
-## 3. Advanced Q&A
+## 3. Questions Avancées
 
-### Q: Can we debug different STM32 microcontroller families simultaneously (e.g., an STM32F4 on one board and an STM32L4 on another)?
-* **Yes, absolutely.** The ST-LINK GDB server dynamically detects the target core architecture (Cortex-M0+, M4, M7, etc.) and uses the appropriate registers. You just need to ensure that each project's debug configuration is pointed to the correct binary and target hardware.
+### Q : Peut-on déboguer des familles différentes de microcontrôleurs STM32 simultanément (ex. : un STM32F4 sur une carte et un STM32L4 sur une autre) ?
+* **Oui, tout à fait.** Le serveur GDB de ST-LINK détecte automatiquement l'architecture du cœur cible (Cortex-M0+, M4, M7, etc.) et utilise les registres correspondants. Vous devez simplement veiller à ce que chaque configuration de débogage pointe vers le bon binaire et le bon matériel cible.
 
-### Q: Does terminating or restarting one debug session affect the others?
-* **No.** Each session runs in its own GDB server instance on a distinct network port. You can stop, compile, flash, and restart `Project_IHM` without interrupting `Project_Principal`.
+### Q : Est-ce que le fait d'arrêter ou de redémarrer une session de débogage affecte les autres ?
+* **Non.** Chaque session s'exécute dans sa propre instance de serveur GDB sur un port réseau distinct. Vous pouvez arrêter, compiler, flasher et redémarrer le `Projet_IHM` sans interrompre le `Projet_Principal`.
 * > [!TIP]
-  > This independence is highly valuable for testing **robustness**: you can halt/suspend one microcontroller (simulating a crash or communication timeout) and observe how the other microcontroller's state machine handles the communication loss.
+  > Cette indépendance est très utile pour tester la **robustesse** du système : vous pouvez suspendre un microcontrôleur (simulant un crash ou une perte de communication) et observer comment la machine d'état de l'autre carte gère cette perte.
 
-### Q: My debugger is laggy, or Live Expressions take a long time to update.
-* **Cause:** High GDB server overhead when monitoring many variables or trace lines simultaneously.
-* **Fixes:**
-  1. **Increase the Refresh Interval:** Right-click inside the **Live Expressions** tab, select *Refresh Interval...*, and increase it from the default `200ms` to `500ms` or `1000ms`.
-  2. **Limit Expressions:** Remove unused variables from the Live Expressions view.
-  3. **Disable SWO Trace:** If you are not actively using Serial Wire Output (SWO) tracing (e.g., `printf` redirection), disable it in the **Debugger** tab of your debug configuration to free up bandwidth.
+### Q : Mon débogueur est lent, ou les Live Expressions mettent du temps à s'actualiser.
+* **Cause :** Surcharge du serveur GDB due à la surveillance d'un trop grand nombre de variables ou de signaux simultanés.
+* **Solutions :**
+  1. **Augmenter l'intervalle de rafraîchissement :** Faites un clic droit dans l'onglet **Live Expressions**, sélectionnez *Refresh Interval...*, et augmentez la valeur par défaut de `200ms` à `500ms` ou `1000ms`.
+  2. **Limiter les expressions :** Supprimez de la vue Live Expressions les variables que vous n'avez plus besoin de surveiller en direct.
+  3. **Désactiver le traçage SWO :** Si vous n'utilisez pas activement la sortie SWO (Serial Wire Output) pour rediriger des `printf`, désactivez-la dans l'onglet **Debugger** de votre configuration de débogage pour économiser de la bande passante.
 
-### Q: How does resetting work? If I click the "Restart" button, does it reset both boards?
-* **No.** Clicking the **Restart** (yellow play/pause arrow) or **Reset** button in the debug control panel only resets the microcontroller associated with the *currently selected thread* in the **Debug** view.
-* To reset all boards, select each thread in the Debug view one-by-one and click the Reset button.
+### Q : Comment fonctionne la réinitialisation (Reset) ? Si je clique sur le bouton "Restart", est-ce que cela réinitialise toutes les cartes ?
+* **Non.** Le clic sur le bouton de redémarrage (icône flèche jaune play/pause) ou de réinitialisation (Reset) dans le panneau de contrôle ne réinitialise que le microcontrôleur associé au *thread actuellement sélectionné* dans la vue **Debug**.
+* Pour réinitialiser toutes les cartes, sélectionnez chaque thread un par un dans la vue Debug et cliquez sur le bouton Reset correspondante.
