@@ -1,5 +1,7 @@
 # Débogage Multi-Cible avec Plusieurs Sondes ST-LINK/V2 dans STM32CubeIDE
 
+![Débogage Multi-Cible](repo_cover.png)
+
 Ce dépôt contient un guide pour configurer et exécuter des sessions de débogage simultanées pour plusieurs microcontrôleurs STM32 sur un seul PC.
 
 ## À quoi ça sert ?
